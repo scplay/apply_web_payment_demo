@@ -22,7 +22,7 @@ import request from 'request';
 const APPLE_PAY_CERTIFICATE_PATH = "./certificates/applePayCert.pem";
 const SSL_CERTIFICATE_PATH = "./certificates/cert.pem";
 const SSL_KEY_PATH = "./certificates/key.pem";
-const MERCHANT_IDENTIFIER = "merchant.com.panxsoft.www";
+const MERCHANT_IDENTIFIER = "52C1BF7C450F270F8A14E411533D6A9BEDDA6EF95539F563D3681C84907BF2D8";
 const MERCHANT_DOMAIN = "wemall.xiaojingxiuxiu.com";
 
 try {
@@ -53,11 +53,9 @@ app.use(bodyParser.json());
  */
 app.post('/getApplePaySession', function(req, res) {
 
-    console.log(req.body.url);
     // We need a URL from the client to call
     if (!req.body.url) return res.sendStatus(400);
 
-    console.log(req.body.url);
     // We must provide our Apple Pay certificate, merchant ID, domain name, and display name
     const options = {
         url: req.body.url,
@@ -79,6 +77,8 @@ app.post('/getApplePaySession', function(req, res) {
             console.log(err, response, body);
             res.status(500).send(body);
         }
+        // 如果支付失败，看下 apple 返回信息
+        // console.log(body);
         res.send(body);
     });
 });
